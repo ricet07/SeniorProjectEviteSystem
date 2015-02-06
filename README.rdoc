@@ -1,261 +1,244 @@
-== Welcome to Rails
-
-Rails is a web-application framework that includes everything needed to create
-database-backed web applications according to the Model-View-Control pattern.
-
-This pattern splits the view (also called the presentation) into "dumb"
-templates that are primarily responsible for inserting pre-built data in between
-HTML tags. The model contains the "smart" domain objects (such as Account,
-Product, Person, Post) that holds all the business logic and knows how to
-persist themselves to a database. The controller handles the incoming requests
-(such as Save New Account, Update Product, Show Post) by manipulating the model
-and directing data to the view.
-
-In Rails, the model is handled by what's called an object-relational mapping
-layer entitled Active Record. This layer allows you to present the data from
-database rows as objects and embellish these data objects with business logic
-methods. You can read more about Active Record in
-link:files/vendor/rails/activerecord/README.html.
-
-The controller and view are handled by the Action Pack, which handles both
-layers by its two parts: Action View and Action Controller. These two layers
-are bundled in a single package due to their heavy interdependence. This is
-unlike the relationship between the Active Record and Action Pack that is much
-more separate. Each of these packages can be used independently outside of
-Rails. You can read more about Action Pack in
-link:files/vendor/rails/actionpack/README.html.
 
 
-== Getting Started
-
-1. At the command prompt, create a new Rails application:
-       <tt>rails new myapp</tt> (where <tt>myapp</tt> is the application name)
-
-2. Change directory to <tt>myapp</tt> and start the web server:
-       <tt>cd myapp; rails server</tt> (run with --help for options)
-
-3. Go to http://localhost:3000/ and you'll see:
-       "Welcome aboard: You're riding Ruby on Rails!"
-
-4. Follow the guidelines to start developing your application. You can find
-the following resources handy:
-
-* The Getting Started Guide: http://guides.rubyonrails.org/getting_started.html
-* Ruby on Rails Tutorial Book: http://www.railstutorial.org/
 
 
-== Debugging Rails
-
-Sometimes your application goes wrong. Fortunately there are a lot of tools that
-will help you debug it and get it back on the rails.
-
-First area to check is the application log files. Have "tail -f" commands
-running on the server.log and development.log. Rails will automatically display
-debugging and runtime information to these files. Debugging info will also be
-shown in the browser on requests from 127.0.0.1.
-
-You can also log your own messages directly into the log file from your code
-using the Ruby logger class from inside your controllers. Example:
-
-  class WeblogController < ActionController::Base
-    def destroy
-      @weblog = Weblog.find(params[:id])
-      @weblog.destroy
-      logger.info("#{Time.now} Destroyed Weblog ID ##{@weblog.id}!")
-    end
-  end
-
-The result will be a message in your log file along the lines of:
-
-  Mon Oct 08 14:22:29 +1000 2007 Destroyed Weblog ID #1!
-
-More information on how to use the logger is at http://www.ruby-doc.org/core/
-
-Also, Ruby documentation can be found at http://www.ruby-lang.org/. There are
-several books available online as well:
-
-* Programming Ruby: http://www.ruby-doc.org/docs/ProgrammingRuby/ (Pickaxe)
-* Learn to Program: http://pine.fm/LearnToProgram/ (a beginners guide)
-
-These two books will bring you up to speed on the Ruby language and also on
-programming in general.
 
 
-== Debugger
-
-Debugger support is available through the debugger command when you start your
-Mongrel or WEBrick server with --debugger. This means that you can break out of
-execution at any point in the code, investigate and change the model, and then,
-resume execution! You need to install ruby-debug to run the server in debugging
-mode. With gems, use <tt>sudo gem install ruby-debug</tt>. Example:
-
-  class WeblogController < ActionController::Base
-    def index
-      @posts = Post.all
-      debugger
-    end
-  end
-
-So the controller will accept the action, run the first line, then present you
-with a IRB prompt in the server window. Here you can do things like:
-
-  >> @posts.inspect
-  => "[#<Post:0x14a6be8
-          @attributes={"title"=>nil, "body"=>nil, "id"=>"1"}>,
-       #<Post:0x14a6620
-          @attributes={"title"=>"Rails", "body"=>"Only ten..", "id"=>"2"}>]"
-  >> @posts.first.title = "hello from a debugger"
-  => "hello from a debugger"
-
-...and even better, you can examine how your runtime objects actually work:
-
-  >> f = @posts.first
-  => #<Post:0x13630c4 @attributes={"title"=>nil, "body"=>nil, "id"=>"1"}>
-  >> f.
-  Display all 152 possibilities? (y or n)
-
-Finally, when you're ready to resume execution, you can enter "cont".
+Manual
 
 
-== Console
 
-The console is a Ruby shell, which allows you to interact with your
-application's domain model. Here you'll have all parts of the application
-configured, just like it is when the application is running. You can inspect
-domain models, change values, and save to the database. Starting the script
-without arguments will launch it in the development environment.
-
-To start the console, run <tt>rails console</tt> from the application
-directory.
-
-Options:
-
-* Passing the <tt>-s, --sandbox</tt> argument will rollback any modifications
-  made to the database.
-* Passing an environment name as an argument will load the corresponding
-  environment. Example: <tt>rails console production</tt>.
-
-To reload your controllers and models after launching the console run
-<tt>reload!</tt>
-
-More information about irb can be found at:
-link:http://www.rubycentral.org/pickaxe/irb.html
+For
 
 
-== dbconsole
 
-You can go to the command line of your database directly through <tt>rails
-dbconsole</tt>. You would be connected to the database with the credentials
-defined in database.yml. Starting the script without arguments will connect you
-to the development database. Passing an argument will connect you to a different
-database, like <tt>rails dbconsole production</tt>. Currently works for MySQL,
-PostgreSQL and SQLite 3.
+‘Evite’ System
 
-== Description of Contents
 
-The default directory structure of a generated Ruby on Rails application:
 
-  |-- app
-  |   |-- assets
-  |       |-- images
-  |       |-- javascripts
-  |       `-- stylesheets
-  |   |-- controllers
-  |   |-- helpers
-  |   |-- mailers
-  |   |-- models
-  |   `-- views
-  |       `-- layouts
-  |-- config
-  |   |-- environments
-  |   |-- initializers
-  |   `-- locales
-  |-- db
-  |-- doc
-  |-- lib
-  |   `-- tasks
-  |-- log
-  |-- public
-  |-- script
-  |-- test
-  |   |-- fixtures
-  |   |-- functional
-  |   |-- integration
-  |   |-- performance
-  |   `-- unit
-  |-- tmp
-  |   |-- cache
-  |   |-- pids
-  |   |-- sessions
-  |   `-- sockets
-  `-- vendor
-      |-- assets
-          `-- stylesheets
-      `-- plugins
 
-app
-  Holds all the code that's specific to this particular application.
 
-app/assets
-  Contains subdirectories for images, stylesheets, and JavaScript files.
 
-app/controllers
-  Holds controllers that should be named like weblogs_controller.rb for
-  automated URL mapping. All controllers should descend from
-  ApplicationController which itself descends from ActionController::Base.
 
-app/models
-  Holds models that should be named like post.rb. Models descend from
-  ActiveRecord::Base by default.
+Rowan University
 
-app/views
-  Holds the template files for the view that should be named like
-  weblogs/index.html.erb for the WeblogsController#index action. All views use
-  eRuby syntax by default.
 
-app/views/layouts
-  Holds the template files for layouts to be used with views. This models the
-  common header/footer method of wrapping views. In your views, define a layout
-  using the <tt>layout :default</tt> and create a file named default.html.erb.
-  Inside default.html.erb, call <% yield %> to render the view using this
-  layout.
+Ashley West, Nick Ferraro, Travis Rice
 
-app/helpers
-  Holds view helpers that should be named like weblogs_helper.rb. These are
-  generated for you automatically when using generators for controllers.
-  Helpers can be used to wrap functionality for your views into methods.
 
-config
-  Configuration files for the Rails environment, the routing map, the database,
-  and other dependencies.
 
-db
-  Contains the database schema in schema.rb. db/migrate contains all the
-  sequence of Migrations for your schema.
 
-doc
-  This directory is where your application documentation will be stored when
-  generated using <tt>rake doc:app</tt>
 
-lib
-  Application specific libraries. Basically, any kind of custom code that
-  doesn't belong under controllers, models, or helpers. This directory is in
-  the load path.
 
-public
-  The directory available for the web server. Also contains the dispatchers and the
-  default HTML files. This should be set as the DOCUMENT_ROOT of your web
-  server.
 
-script
-  Helper scripts for automation and generation.
 
-test
-  Unit and functional tests along with fixtures. When using the rails generate
-  command, template test files will be generated for you and placed in this
-  directory.
 
-vendor
-  External libraries that the application depends on. Also includes the plugins
-  subdirectory. If the app has frozen rails, those gems also go here, under
-  vendor/rails/. This directory is in the load path.
+
+
+
+Table of Contents
+
+Part 1:  Back End Installation and Setup
+
+1    Installing Dependencies ............................................................................................ 1
+
+1.1        Ruby on Rails Installation....................................................................................................... 1
+1.2        Text Editor Installation............................................................................................................ 5
+1.3        References............................................................................................................................ 5
+
+Part 2:  User’s Guide to ‘Evite’ System
+
+2    Getting Started........................................................................................................... 6
+
+2.1        Creating an Account.............................................................................................................   6
+2.2        Managing Your Account........................................................................................................   6
+
+3    Events……….………................................................................................................. 6
+
+3.1         Creating an Event.............................................................................................................   6
+3.1.1         Inviting Guests.................................................................................................................   6
+3.1.2         Creating a Potluck............................................................................................................   7
+3.1.3         Uploading Image.............................................................................................................   7
+3.1.4         Guest Password...............................................................................................................   7
+3.2         Editing an Event ..............................................................................................................   7
+3.3         Deleting an Event ............................................................................................................   7
+3.4         My Events Page ...............................................................................................................   7
+
+4    RSVP, Select a Potluck Item, and Comments...........……..…................................ 8
+
+4.1    Guest RSVP…………….................................................................................................................   8
+4.2    Selecting a Potluck Item…........................................................................................................   8
+4.3    Comments….............................................................................................................................  8
+4.4    Email Notifications...................................................................................................................   8
+
+5   Bugs….….…………..................................................................................................... 8
+
+
+
+
+
+
+
+
+Part 1: Back End Installation and Setup
+1:  Installing Dependencies
+1.1:  Ruby on Rails Installation
+
+	There are a few ways to install Ruby on Rails.  The easiest of which can be found using the method on the following website:  railsinstaller.org.  RailsInstaller has everything you need to get started using Rails.  A single click will download all the necessary packages to start working. The following packages for Windows are included:
+
+•	Ruby 1.9.3
+•	Rails 3.2
+•	Bundler 1.0.18
+•	Git 1.7.6
+•	Sqlite 3.7.3
+•	TinyTDS 0.4.5
+•	SQL Server Support 3.3.3
+•	DevKit
+
+For Mac, the following packages are included:
+
+•	Ruby 1.9.3
+•	Rails 3.2.7
+•	Git 1.7.9.6
+•	Sqlite 3070500
+•	Osx-gcc-installer 4.1
+•	JewelryBox 1.3.0
+•	RVM 1.14.2
+•	SM 0.10.3
+
+Steps for Windows Users to complete installation and create a small demo:
+
+1.	Open the downloaded file to begin the installation and follow the onscreen instructions.
+2.	Once installation is complete it will bring up the Windows Command Line asking for your name and email address.  Once you enter both you should see your generated public SSH key which you will need later.
+3.	Next you’ll need to create a new rails application via the command line. Enter the following line of code:
+		rails new railsinstaller_demo
+4.	Once it’s complete we can now visit the application folder and start the Rails server to see the site in our browser.  Enter the following lines of code:
+		cd railsinstaller_demo
+		rails s
+	Now you can visit http://localhost:3000 in your web browser and see 	the default Rails welcome page.
+5.	The following steps require a text editor (see Text Editor Installation, 1.2).  Open your rails demo inside your text editor and find /config/routes.rb, once you are there uncomment the following line of code by removing the “#” sign in front of it.  Be sure to save after doing so.
+		root :to => ‘welcome#index’
+6.	Next you’ll need to visit the command line prompt and create a welcome controller for the index action. Enter the following line of code to do so:
+		rails g controller welcome index
+7.	Now let’s edit the welcome index.html which can be found under app/views/welcome/index.html.erb and change the content to say something like the following:
+		<h1> Welcome to the Rails Installer </h1>
+	Be sure to save that file.
+8.	Now remove the file at /public/index.html by right clicking on it and deleting it.  Refresh your browser and you should see your page.
+9.	Congratulations, Rails is officially installed on your computer.
+	
+Steps for Mac Users to complete installation (slightly different) and create a small demo:
+
+1.	Open the downloaded TAR file to begin the installation and follow the onscreen instructions to setup GIT. This takes several minutes to do.
+2.	Once installation is complete go ahead and open up Terminal under 	/Application/Utilities 
+3.	In order to check and make sure everything was installed okay, enter the following lines of code to display information on the current versions you have:
+	git –version :  Display version of GIT you have.
+	rvm info : Display information about your Ruby Version Manager.
+	ruby –v : Display information about your Ruby version.
+	rails –v : Display information about your Rails version.
+4.	Next you’ll need to create a new rails application. Enter the following line of code:
+		cd Desktop/
+		rails new railsinstaller_demo
+5.	Once it’s complete we can now visit the application folder and start the Rails server to see the site in our browser.  Enter the following lines of code:
+		cd railsinstaller_osx_demo
+		rails server
+	Now you can visit http://localhost:3000 in your web browser and see 	the default Rails welcome page.
+6.	The following steps require a text editor (see Text Editor Installation, 1.2).  Open your rails demo inside your text editor find /config/routes.rb, once you are there uncomment the following line of code by removing the “#” sign in front of it.  Be sure to save after doing so.
+		root :to => ‘welcome#index’
+7.	Next you’ll need to visit the command line prompt and create a welcome controller for the index action. Enter the following line of code to do so:
+		rails g controller welcome index
+8.	Now let’s edit the welcome index.html which can be found under app/views/welcome/index.html.erb and change the content to say something like the following:
+		<h1> Welcome to the Rails Installer </h1>
+	Be sure to save that file.
+9.	Now remove the file at /public/index.html by right clicking on it and deleting it.  Refresh your browser and you should see your page.
+10.	Congratulations, Rails is officially installed on your computer.
+	
+1.2:  Text Editor Installation
+
+	There are many different text editors available online for free to anyone.  All of them serve the same purpose and it just comes down to preference which one you decide to use and code with.  Here are some available text editors that are popular amongst web developers:
+
+•	JetBrains
+•	Aptana | Studio
+•	Intype
+•	NetBeans
+•	jEdit
+•	ScriptDevelop
+•	Redcar
+•	Sublime Text Editor
+•	Zeus
+•	Sapphire Steel
+•	TextMate
+
+Some of these are designed specifically for either Windows or Mac.  Sublime Text Editor served as our text editor for this website.  It works great!  So, depending on which you choose, download, install and follow the onscreen instructions to complete installation.  After you have done this, you can really get started coding and running your programs!
+
+1.3:  References
+
+	The standard library for Ruby is of great use as well as the Rails API; they are both very helpful with coding:
+	
+•	http://www.ruby-doc.org/stdlib-1.9.3/
+•	http://api.rubyonrails.org/
+
+Part 2: User’s Guide to ‘Evite’ System
+2:  Getting Started
+2.1:  Creating an Account
+
+	When one visits the website, they are greeted by a home page, welcoming them to the site.  On the home page it explains a little about the site and informs the guest that they must make an account so they can start sending out invitations to events.  So, in order to do this, the guest must click on ‘Register’ located at the top of the page.  Upon clicking this link, the guest will provide their own username, email, and password.  Make sure the passwords match!  Now you officially have an account with the website.  Login using the information you provided and get started sending out invitations!
+
+2.2:  Managing Your Account
+
+	When you finally make an account, login with it and it will bring you to your user home.  On the user home page, you can see the events you created, a link to edit your profile settings, a link to create a new event and a link to logout.  
+
+	Using the edit profile link allows you to change your username, update your email, and change your password.  Hit the ‘Back’ link or the ‘My Home’ link to get to your user home.
+
+
+3:  Events
+3.1:  Creating an Event
+
+	Upon logging into your account and accessing the user home page, there is a link that reads ‘Create New Event’.  Click on this link and it will bring you to a page with a long form.  The fields Title, Host Name, Phone Number, Location, Address, City, State, Zip, Date, Time, and Guest Password are mandatory and cannot be left blank.  Enter your desired information and then continue on to fill out the rest.  The other fields are Event Type, Description, Adding Guests, Potluck, RSVP options, Guest List Privacy, and the Image.  
+
+3.1.1:  Inviting Guests
+
+	After filling out the required information, you can add guests to your party by clicking on the add guest link as many times as desired.  There is no limit to how many guests you can add.  Enter in their email address and they will be emailed with your event’s information. The guest password will allow them to login and see the event.  For more information on this, see 3.1.4. Also, in order to add more guests to the event, see Editing an Event, 3.2.
+
+
+3.1.2:  Creating a Potluck
+
+	After filling out the required information, you can add the option of a Potluck to your event.  After clicking the checkbox, a form will pop up similar to the add guest link.  The same procedure goes here, enter in any desired items in the text boxes and you can go on after this.  There is also no limit to how many items you can add.  
+
+3.1.3:  Uploading Image
+
+	After filling out the required information, you can add guests to your party by clicking on the add guest link as many times as desired.  There is no limit to how many guests you can add.  Enter in their email address and they will be emailed with your event’s information. The guest password will allow them to login and see the event.  For more information on this, see 4.2.  
+  
+3.1.4:  Guest Password
+
+	The guest password is very important.  It is used every time a guest tries to view your event.  Without this password there is no way for them to log on and see your event information.  The password is in the email notifying the guest of the invitation.
+
+3.2:  Editing an Event
+
+	Editing an event is very easy.  Simply go to your user home page and click on edit right next to the event you wish to update or change.  Inside here you can add more guests, add more potluck options, and change or update any fields you like.  Whenever an event is edited, an email notification is sent out to the new guests and old guests notifying them of the change.  
+
+3.3:  Deleting an Event
+
+	Deleting an event is even easier than editing one.  Simply go to your user home page and click on destroy right next to the event you wish to get rid of.  It will pop up a prompt asking you if you are sure you want to delete the event, ‘yes’ will destroy it, option ‘no’ will obviously leave it there.
+
+3.4:  My Events Page
+
+	This page was designed to make it extremely easy to manage and handle all of the events the host owns.  With this page, the user can easily, view the event, edit the details of the event, or destroy the event.  It is organized and looks much better than having to visit multiple pages to see your event.
+
+
+  
+
+4:  RSVP, Select a Potluck Item, and Comments
+4.1:  Guest RSVP
+
+	The Guest RSVP options are determined by the host.  They may have the option to select Yes, No, or Maybe, or just Yes, or No.  When a guest logs on using their email and guest password they can choose which option to submit.  After the guest picks on and submits it, the host is notified of their response.  Then the guest may log back in using the link provided in the email to continue viewing the event or stay on the home page.  The guest can choose to update their response by logging back in as well.
+4.2:  Selecting a Potluck Item
+
+	The guest may want to bring one of the items for the potluck.  If this is the case, the guest can log in and view the event.  Under the potluck section, the list of possible items is displayed.  The guest can click ‘Bring Me!’ and the host will be notified about the guest who clicked whichever item.  A text message will also appear thanking the guest for choosing an item to bring.  
+4.3:  Comments
+
+	The guest and host can also leave comments on the events page in order to discuss any questions, concerns, or even just chat.  Located at the bottom of the event’s page inside a scroll box.  There is a text area where the guest or host can type their message and hit ‘Create Comment’.
+4.4:  Email Notifications
+
+	The host is always notified when a guest responds to the invite, chooses to bring an item for the potluck and whenever the event is created.  The guest is always notified when the host updates an event and when a host invites the guest to the event.  Inside the email to the guest when an event is created is the guest password and link to the event.  This email is very important because it is necessary to view the event page.
+
+
