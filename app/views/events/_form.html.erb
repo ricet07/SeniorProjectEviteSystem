@@ -1,0 +1,242 @@
+
+<%= form_for(@event) do |f| %>
+  <% if @event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% @event.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div id="wrapper">
+  <div id="tabContainer">
+    <div class="tabs">
+      <ul>
+        <li id="tabHeader_1">Basic Info</li>
+        <li id="tabHeader_2">Where?</li>
+        <li id="tabHeader_3">Invitations</li>
+        <% if @event.potluck %>
+        <li id="tabHeader_4" style="display: block;">Potluck?</li>
+        <% else %>
+        <li id="tabHeader_4" style="display: none;">Potluck?</li>
+        <% end %>
+        <li id="tabHeader_5">Picture</li>
+      </ul>
+    </div>
+    <div class="tabscontent">
+      <div class="tabpage" id="tabpage_1">
+        <h2>Party Details</h2>
+        <i>Anything with a * next to it is required to be filled in. </i><br/><br/>
+        <table>
+          <tr>
+            <td>
+              <div class="field">
+                <%= f.label :title %>*<br />
+                <%= f.text_field :title, :placeholder => "ex: My Wedding!" %>
+              </div>
+              <div class="field">
+                <%= f.label "Type" %><br />
+                <%= f.text_field :eventType, :placeholder => "ex: BBQ" %>
+              </div>
+             <div id="class" >
+               <%= f.check_box :potluck, :id => "box", :onchange => "if(this.checked){show()} else { dontShow() }"%>
+               <%= f.label :potluck %><br />
+             </div>
+              <div class="field">
+                <%= f.label :hostName %>*<br />
+                <%= f.text_field :hostName %>
+              </div>
+              <div class="field">
+                <%= f.label :phoneNum %>*<br />
+                <%= f.text_field :phoneNum, :placeholder =>"888-888-8888" %>
+              </div>
+            </td>
+            <td>
+              <div class="field">
+                <%= f.label :date %>*<br />
+                <%= f.text_field :date, :placeholder =>"mm/dd/yyyy"%>
+              </div>
+              <div class="field">
+                <%= f.label :time %>*<br />
+                <%= f.text_field :time, :placeholder =>"hh:mm am/pm"%>
+              </div>
+              <div class="field">
+                <%= f.label :description %><br />
+                <%= f.text_area :description, :rows => "5" %>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="tabpage" id="tabpage_2">
+        <h2>Where's the Party At?</h2>
+        <i>Anything with a * next to it is required to be filled in. </i><br/><br/>
+        <div class="field">
+          <%= f.label "Where" %>*<br />
+          <%= f.text_field :location, :placeholder =>"ex: Nick's Pizzeria" %>
+        </div>
+        <div class="field">
+          <%= f.label :address %>*<br />
+          <%= f.text_field :address %>
+        </div>
+        <div class="field">
+          <%= f.label :city %>*<br />
+          <%= f.text_field :city %>
+        </div>
+        <div class="field">
+          <%= f.label :state %>*<br />
+          <%= f.select :state,       ['Arkansas',
+                                      'Alabama',
+                                      'Alaska',
+                                      'Arizona',
+                                      'California',
+                                      'Colorado',
+                                      'Connecticut',
+                                      'Delaware',
+                                      'District of Columbia',                                     
+                                      'Florida',
+                                      'Georgia',
+                                      'Hawaii',
+                                      'Iowa',
+                                      'Idaho',
+                                      'Illinois',
+                                      'Indiana',
+                                      'Kansas',
+                                      'Kentucky',
+                                      'Louisiana',
+                                      'Maine',
+                                      'Massachusetts',
+                                      'Michigan',
+                                      'Minnesota',
+                                      'Mississippi',
+                                      'Missouri',
+                                      'Montana',
+                                      'Nebraska',
+                                      'Nevada',
+                                      'New Hampshire',
+                                      'New Jersey',
+                                      'New Mexico',
+                                      'New York',
+                                      'North Carolina',
+                                      'North Dakota',
+                                      'Ohio',
+                                      'Oklahoma',
+                                      'Oregon',
+                                      'Pennsylvania',
+                                      'Puerto Rico',
+                                      'Rhode Island',
+                                      'South Carolina',
+                                      'South Dakota',
+                                      'Tennessee',
+                                      'Texas',
+                                      'Utah',
+                                      'Vermont',
+                                      'Virginia',
+                                      'Washington',
+                                      'West Virginia',
+                                      'Wisconsin',
+                                      'Wyoming'], 
+                                      :include_blank => true %>
+        </div>
+        <div class="field">
+          <%= f.label :zip %>*<br />
+          <%= f.text_field :zip %>
+        </div>
+      </div>
+      <div class="tabpage" id="tabpage_3">
+        <h2>Invite Friends</h2>
+        <div class="fields">
+          <%= f.fields_for :guests do |builder| %>
+            <%= render 'guest_fields', :f => builder %>
+          <% end %>
+          <%= link_to_add_fields "Add Guest", f, :guests %>
+        </div>
+
+        
+        <p>
+          RSVP Options for Guests*
+        </p>
+        <div class="field">
+          <%= f.radio_button :rsvp_choices, "Yes, No" %>
+          <%= f.label "Yes, No" %> <br/>
+          <%= f.radio_button :rsvp_choices, "Yes, No, Maybe" %>
+          <%= f.label "Yes, No, Maybe" %><br/>
+        </div>
+
+        <p>
+          Guestlist Privacy 
+        </p>
+        <div class="field">
+          <%= f.check_box :guestlist_privacy %>
+          <%= f.label "If checked, the guestlist will be private." %>
+        </div>
+
+        
+        <div class="field" >
+          <%= f.label :guestPass %>*<br />
+          <%= f.text_field :guestPass %>
+        </div>
+        <div class="field" style="display: none;">
+          <%= f.label :user_id %><br />
+          <%= f.number_field :user_id %>
+        </div>
+          <div class="field" style="display: none;">
+            <%= f.label :hostEmail %><br />
+            <%= f.text_field :hostEmail %>
+          </div>
+
+        
+      </div>
+      <div class="tabpage" id="tabpage_4">
+        <h2>Potluck Details</h2>
+        <script type="text/javascript">
+
+          function show() {
+            document.getElementById('tabHeader_4').style['display'] = 'block';
+          }
+          function dontShow() {
+            document.getElementById('tabHeader_4').style['display'] = 'none';
+          }
+        </script>
+        <% if @event.user_id == current_user.id %>
+         <% @potlucks.each do |p| %>
+           <% if p.event_id == @event.id %>
+              <%= p.item %> <br/>
+           <% end %>
+          <% end %>
+         <% end %>
+
+        <div id="potluck" style="display: block;">
+          <%= f.fields_for :potlucks do |builder| %>
+              <%= render 'potluck_fields', :f => builder %>
+          <% end %>
+            <%= link_to_add_fields "Add potluck", f, :potlucks %>
+          </div>
+
+      </div>
+      <div class="tabpage" id="tabpage_5">
+        <h2>Choose a Picture!</h2>
+          <div class="field">
+            <br />
+            <%= f.file_field :image %>
+          </div>
+
+         <div class="actions" style="float:right;">
+             If you think everything is correct, click Create Event!
+            <%= f.submit %>
+          </div><br>
+      </div>
+      <% end %>  
+
+
+    </div>
+  </div>
+<script src="tabs.js"></script>
+
+
+ 
+
+

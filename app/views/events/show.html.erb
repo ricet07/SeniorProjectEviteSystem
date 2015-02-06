@@ -1,0 +1,163 @@
+<div id="container">
+<div id="navigation">
+    <ul>
+      <li><a href="/home">My Home</a></li>
+      <li><a href="/events">My Events</a></li>
+      <li><a href="/events/new">Create New Event</a></li>
+      <li><a href="/users/<%= current_user.id%>/edit">Profile Settings</a></li>
+      <% if current_user.admin == true %>
+        <li><a href="/users">View All Users</a></li>    
+      <% end %>
+         <li><%= link_to "Logout", :logout %></li>
+    </ul>
+  </div>
+  <br>
+
+<% if @event.user_id == current_user.id || current_user.admin==true  %>
+
+
+  <div id="header", style="text-align: center;">
+    <h1> <%= @event.title %> </h1>
+  </div>
+  <p id="notice"><%= notice %></p>
+
+<div id="wrapper" >
+  <div id="tabContainer">
+    <div class="tabs">
+      <ul>
+        <li id="tabHeader_1">Basic Event Info</li>
+        <li id="tabHeader_2">Guest List</li>
+        <li id="tabHeader_3">Pot Luck</li>
+        <li id="tabHeader_4">Map</li>
+      </ul>
+    </div>
+    <div class="tabscontent">
+      <div class="tabpage" id="tabpage_1">
+        <h2>Event Details</h2>
+        <p>
+          <b>Hostname:</b>
+          <%= @event.hostName %>
+        </p>
+        <p>
+          <b>Type:</b>
+          <%= @event.eventType %>
+        </p>
+        <p>
+          <b>Phone Number:</b>
+          <%= @event.phoneNum %>
+        </p>
+        <p>
+          <b>Date and Time:</b>
+          <%= @event.date %> at <%= @event.time %>
+        </p>
+          <div id="description">
+             <i><%= @event.description %></i>
+          </div> 
+          <%= link_to "Edit this Event", edit_event_path(@event) %>
+      </div>
+      <div class="tabpage" id="tabpage_2">
+        <h2>Guest List</h2>
+        <table> 
+          <tr>
+            <td style="float:left; width:100%;">
+              <p>
+                <b> Comments </b>
+                <div id="textBox" style="overflow:scroll; height:200px; width:100%; overflow-x:hidden;">
+                  <% @event.comments.each do |comment| %>
+                    <%= comment.commenter %><br/>
+                    <dd> -<%= comment.body %> </dd> 
+                    <br/>
+                  <% end %>
+                </div>
+                <br>
+                <%= form_for([@event, @event.comments.build]) do |f| %>
+                  <div class ="field" > 
+                    <%= f.text_field :commenter, :hidden=>true, :value => current_user.email  %>
+                  </div>
+                  <div class ="field" > 
+                    <%= f.label "Comment" %><br/>
+                    <%= f.text_area :body, :rows => "5" %>
+                  </div>
+                  <div class="actions">
+                    <%= f.submit %>
+                  </div>
+                <% end %>
+              </p>
+            </td>
+            <td valign="top" style="float:center;">
+                <b> RSVP Options </b>
+                <%= @event.rsvp_choices %>
+                <br><br>
+
+              <% if @event.guestlist_privacy == false %>
+                <b> Guests Invited: </b> <br/>
+                <% @guests.each do |guest| %>
+                  <% if guest.event_id == @event.id %>
+                    <%= guest.email %> <br/>
+                  <% end %>
+                <% end %>
+              <%end%>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="tabpage" id="tabpage_3">
+        <h2>Pot Luck</h2>
+        <br>
+        <table>
+          <tr>
+            <td valign="top">
+              <b> What Other People are Bringing: </b> <br>
+                <% @potluck.each do |pl| %>
+                  <% if pl.event_id == @event.id && pl.guest_id != 0 %> 
+                      <% @guests.each do |g| %>
+                        <% if pl.guest_id == g.id %>
+                          <i> <%= g.email %> </i>
+                        <% end %>
+                      <% end %>
+                    is bringing   <i>  <%= pl.item %></i> <br>
+                  <% end %>
+                <% end %>
+              </td>
+            </tr>
+          </table>
+          </div>
+      <div class="tabpage" id="tabpage_4">
+        <p>
+          <b>Location:</b>
+          <%= @event.location %>
+        </p>
+        <p>
+          <b>Address:</b>
+          <%= @event.address %>,   <%= @event.city %>,   <%= @event.state %>,  <%= @event.zip %>
+        </p>
+        <% @locations = Location.all %>
+        <% @locations.each do |loc| %>
+         <% if(loc.event_id == @event.id) %>
+            <%= image_tag "http://maps.google.com/maps/api/staticmap?size=450x300&sensor=false&zoom=16&markers=#{loc.latitude}%2C#{loc.longitude}" %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% if @event.image_file_name != nil%>
+  <div id="description">
+        <%= image_tag @event.image.url %>
+  </div>
+<% end %>
+
+<script src="tabs.js"></script>
+
+
+
+    <% @guests.each do |guest| %>
+     <% if guest.event_id == @event.id && guest.alreadyEmailed == false%>
+      <% guest.alreadyEmailed = true %>
+      <% guest.update_attributes(params[:guest]) %>
+      <% Notifier.invited(guest, @event).deliver %> <br/>
+     <% end %>
+    <% end %>
+    <% end %>
+</div>
+<br>
+</div>

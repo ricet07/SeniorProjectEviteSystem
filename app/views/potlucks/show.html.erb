@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Event:</b>
+  <%= @potluck.event_id %>
+</p>
+
+<p>
+  <b>Item:</b>
+  <%= @potluck.item %>
+</p>
+
+<p>
+  <b>Guest:</b>
+  <%= @potluck.guest_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_potluck_path(@potluck) %> |
+<%= link_to 'Back', potlucks_path %>

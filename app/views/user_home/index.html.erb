@@ -1,0 +1,43 @@
+<%= stylesheet_link_tag 'design' %>
+
+<div id="container">
+  <div id="navigation">
+    <ul>
+      <li><a href="home">My Home</a></li>
+      <li><a href="events">My Events</a></li>
+      <li><a href="events/new">Create New Event</a></li>
+      <li><a href="users/<%= current_user.id%>/edit">Profile Settings</a></li>
+      <% if current_user.admin == true %>
+        <li><a href="users">View All Users</a></li>    
+      <% end %>
+         <li><%= link_to "Logout", :logout %></li>
+    </ul>
+  </div>
+  <br>
+  <div id="header">
+    <h1>
+      Welcome Home, 
+        <% @users.each do |user| %>
+          <% if user.id == current_user.id %>   
+          <%= user.username %> 
+        <% end %>
+      <% end %>
+    </h1>
+  </div>
+  
+  <div id="content">
+    <h3> Parties I'm invited too! </h3>
+    <% @guests.each do |g| %>
+      <% if g.email == current_user.email %>
+        <% @events.each do |e| %>
+          <% if g.event_id == e.id && e.hostEmail != g.email %>
+            <a href="home/<%= e.id%>"><%= e.title %>:</a>
+             hosted by <%= e.hostName %> at <%= e.location %>,  When? <%= e.date %>,<%= e.time %>
+            <br>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+</div>

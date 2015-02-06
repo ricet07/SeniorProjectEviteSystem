@@ -1,0 +1,109 @@
+<div id="container">
+<div id="navigation">
+    <ul>
+      <li><a href="home">My Home</a></li>
+      <li><a href="events">My Events</a></li>
+      <li><a href="events/new">Create New Event</a></li>
+      <li><a href="users/<%= current_user.id%>/edit">Profile Settings</a></li>
+      <% if current_user.admin == true %>
+        <li><a href="users">View All Users</a></li>    
+      <% end %>
+         <li><%= link_to "Logout", :logout %></li>
+    </ul>
+  </div>
+  <br>
+<h1>Events You Created</h1>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Type</th>
+    <th>Hostname</th>
+    <th>Phonenum</th>
+    <th>Location</th>
+    <th>Address</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Zip</th>
+    <th>Description</th>
+    <th>Potluck</th>
+    <th></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @events.each do |event| %>
+  <tr>
+   <% if event.user_id == current_user.id %>
+    <td><%= event.title %></td>
+    <td><%= event.eventType %></td>
+    <td><%= event.hostName %></td>
+    <td><%= event.phoneNum %></td>
+    <td><%= event.location %></td>
+    <td><%= event.address %></td>
+    <td><%= event.city %></td>
+    <td><%= event.state %></td>
+    <td><%= event.zip %></td>
+    <td><%= event.description %></td>
+    <td><%= event.potluck %></td>
+    <td><%= link_to 'Show', event %></td>
+    <td><%= link_to 'Edit', edit_event_path(event) %></td>
+    <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td> <a href="home/<%= event.id%>"> Guest Preview</a> </td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+<br />
+<div style="float:right;"> 
+ <%= link_to 'New Event', new_event_path %>
+</div>
+<br />
+<% if current_user.admin == true %>
+    <h1>All Events</h1>
+
+    <table>
+    <tr>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Hostname</th>
+        <th>Phonenum</th>
+        <th>Location</th>
+        <th>Address</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Zip</th>
+        <th>Description</th>
+        <th>Potluck</th>
+        <th>Host</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+
+    <% @events.each do |event| %>
+      <tr>
+        <td><%= event.title %></td>
+        <td><%= event.eventType %></td>
+        <td><%= event.hostName %></td>
+        <td><%= event.phoneNum %></td>
+        <td><%= event.location %></td>
+        <td><%= event.address %></td>
+        <td><%= event.city %></td>
+        <td><%= event.state %></td>
+        <td><%= event.zip %></td>
+        <td><%= event.description %></td>
+        <td><%= event.potluck %></td>
+        <td><%= event.hostEmail %></td>
+        <td><%= link_to 'Show', event %></td>
+        <td><%= link_to 'Edit', edit_event_path(event) %></td>
+        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+    </table>
+
+<% end %>
+
+
+</div>

@@ -1,0 +1,37 @@
+<%= stylesheet_link_tag 'design' %>
+
+<div id="container">
+  <div id="header">
+		<h2><i>Hello, You've Been Invited!</i></h2>
+  </div>
+   <div id="navigation">
+    <ul>
+      <li><a href= "http://localhost:3000/home/<%= @event.id %>"><%= @event.title %></a></li>
+    </ul>
+  </div>
+
+	<p> Your friend <%= @event.hostName %> has invited you to participate in their party. 
+
+    Here's what <%= @event.hostName %> had to say: <br><br>
+
+    <h4><i> <%= @event.description %> </h4>
+
+    <br>If you want to accept this invitation, use the following link or click the link above (<%= @event.title %>):
+ <br><br>
+
+  http://localhost:3000/home/<%= @event.id %>
+	</p>
+
+ Feel free to contact the host at <%= @event.phoneNum %>. <br><br>
+ 
+ Please log in to view the event with your email (<%= @guest.email %>) and this guest password:
+
+ <b> <%= @event.guestPass %> </b> <br> <br>
+
+ <h3> <i> Hope to see you there! </i></h3>
+ <br>
+	
+</div>
+ 	<div id="footer">
+   		 <h3><i> Copyright © Evite System 2012 </i></h3>
+  	</div>

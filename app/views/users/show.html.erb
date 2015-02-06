@@ -1,0 +1,41 @@
+<div id="container">
+<div id="navigation">
+    <ul>
+      <li><a href="home">My Home</a></li>
+      <li><a href="events">My Events</a></li>
+      <li><a href="events/new">Create New Event</a></li>
+      <li><a href="users/<%= current_user.id%>/edit">Profile Settings</a></li>
+      <% if current_user.admin == true %>
+        <li><a href="users">View All Users</a></li>    
+      <% end %>
+         <li><%= link_to "Logout", :logout %></li>
+    </ul>
+  </div>
+  <br>
+<p id="notice"><%= notice %></p>
+<% if @user.id == current_user.id || current_user.admin==true  %>
+<p>
+  <b>Username:</b>
+  <%= @user.username %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @user.email %>
+</p>
+
+<p>
+  <b>Crypted password:</b>
+  <%= @user.crypted_password %>
+</p>
+
+<p>
+  <b>Salt:</b>
+  <%= @user.salt %>
+</p>
+
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', userhome_path %>
+<% end %>
+</div>

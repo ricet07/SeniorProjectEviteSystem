@@ -1,0 +1,39 @@
+<%= stylesheet_link_tag 'design' %>
+
+<div id="container">
+  <div id="navigation">
+    <ul>
+      <li><a href="/home">My Home</a></li>
+      <li><a href="/events">My Events</a></li>
+      <li><%= link_to 'Show', @event %> |</li>
+      <li><%= link_to "Logout", :logout %></li>
+
+    </ul>
+  </div>
+  <br>
+  <div id="header", style="text-align: center;">
+    <h1> Editing event </h1>
+  </div>
+  </br>
+
+<% if @event.user_id == current_user.id || current_user.admin==true %>
+  <table>
+    <tr>
+      <td valign="right">
+        <%= render 'form' %>
+        <br/>
+      </td>
+      <td  valign="top">
+        <h3> Remove Guests from Guest List: </h3>
+
+         <% @guests.each do |guest| %>
+           <% if guest.event_id == @event.id %>
+           <%= guest.email %> <%= link_to 'Remove', guest, method: :delete, data: { confirm: 'Are you sure?' } %> <br/>
+           <% end %>
+         <% end %>
+       </td>
+    </tr>
+ </table>
+  <br/>
+<% end %>
+</div>

@@ -1,0 +1,47 @@
+<%= stylesheet_link_tag "design" %>
+<% @tryAgain = true %>
+
+  <% if session[:letin]=="ok" %>
+     <%= render 'preview' %>
+     <%= session[:letin] =""%>
+  <% else %>
+
+<% if logged_in? %>
+
+  <!-- get the current user's data and put it into a varible myuser -->	
+   <% @users.each do |u| %>
+     <% if u.id == current_user.id %>
+       <% @myuser= u %> 
+      <% end %>
+    <% end %>
+
+  <!-- if your logged in and not the host and a guest-->
+	<% @guests.each do |guest| %>
+       <% if guest.event_id == @event.id && guest.email == @myuser.email%>
+                  <!-- a guest who has an account and is logged in will see this <br/> -->
+           <% params[:guestPassword] = @event.guestPass %>
+           <% params[:guestEmail] = current_user.email %>
+           <%= render 'preview' %>
+       <% end %> <!-- end for if guesteventid==event id -->
+    <% end %> <!-- end for guests do -->
+    <% else %> <!-- else you are not logged in -->
+
+   	<% if params[:guestPassword] != nil && params[:guestEmail] != nil%>
+	  <% if params[:guestPassword] == @event.guestPass %>
+		<% @guests.each do |g| %>
+         <% if g.email == params[:guestEmail] && g.event_id == @event.id %>
+         	<% @tryAgain = false %>
+       		       <!-- i am a guest that was invited to this party <br/> -->
+       		 <%= render 'preview' %>
+      	 <% end %>
+    	<% end %>
+	  <% end %>
+    <% end %>
+
+	<% if @tryAgain %>
+       <%= render 'form' %>
+    <% end %>
+     
+<% end %> <!-- end for if logged in -->
+<% end %>
+

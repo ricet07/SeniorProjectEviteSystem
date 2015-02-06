@@ -1,0 +1,31 @@
+<%= stylesheet_link_tag 'design' %>
+
+
+<div id="container">
+  <div id="navigation">
+    <ul>
+      <li><a href="home">Home</a></li>
+      <li><a href="users/new">Register</a></li>
+      <li><a href="login">Login</a></li>
+    </ul>
+  </div><br>
+  <div id="content">
+    <h2>
+      Guest Login
+    </h2>
+<%= form_tag(request.path) do -%>
+  <div class="field">
+    <%= "Your Email" %><br />
+    <%= text_field_tag "guestEmail"%>
+  </div>
+
+  <div class="field">
+    <%= "Guest Password" %><br />
+    <%= password_field_tag "guestPassword"%>
+  </div>
+
+  <div class="actions">
+    <%= submit_tag "Login in as Guest" %>
+  </div>
+</div>
+<% end %>
